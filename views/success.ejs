@@ -1,0 +1,55 @@
+<%- include('layouts/header') %>
+
+<div class="container-fluid">
+    <div class="row px-xl-5">
+        <div class="col-12">
+            <nav class="breadcrumb bg-light mb-30">
+                <a class="breadcrumb-item text-dark" href="index.html">Home</a>
+                <a class="breadcrumb-item text-dark" href="checkout.html">Checkout</a>
+                <span class="breadcrumb-item active">Order Success</span>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<!-- Success Section -->
+<div class="container-fluid">
+    <div class="row px-xl-5 justify-content-center">
+        <div class="col-lg-8">
+            <div class="bg-light p-5 mb-5 text-center shadow-sm">
+
+                <div class="mb-4">
+                    <i class="fa fa-check-circle text-primary" style="font-size: 80px;"></i>
+                </div>
+
+                <h2 class="mb-3 text-dark">Thank You! 🎉</h2>
+                <h4 class="mb-3">Your Order Has Been Placed Successfully</h4>
+
+                <p class="mb-4">
+                    We’ve received your order and will start processing it right away.
+                    You will receive an email confirmation shortly.
+                </p>
+
+                <div class="bg-white p-4 mb-4 text-left">
+                    <h5 class="mb-3">Order Details</h5>
+                    <p><strong>Order ID:</strong> <span id="orderId"><%= orders.razorpay_order_id %></span></p>
+                    <p><strong>Payment ID:</strong> <span id="paymentId"><%= orders.razorpay_payment_id %></span></p>
+                    <p><strong>Total Amount:</strong> ₹<span id="amount"><%= orders.total %></span></p>
+                    <p><strong>Payment Status:</strong> <span class="badge <%= orders.payment_status == 'paid' ? 'badge-success' : 'badge-danger' %> "><%= orders.payment_status %></span></p>
+                </div>
+
+                <div class="d-flex justify-content-center">
+                    <a href="/" class="btn btn-primary px-4 mr-3">
+                        <i class="fa fa-home mr-2"></i>Go to Home
+                    </a>
+                    <a href="/" class="btn btn-outline-primary px-4">
+                        <i class="fa fa-shopping-bag mr-2"></i>Continue Shopping
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('layouts/footer') %>

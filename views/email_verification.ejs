@@ -1,0 +1,50 @@
+<%- include('layouts/header') %>
+
+<div class="container-fluid">
+    <div class="row px-xl-5">
+        <div class="col-12">
+            <nav class="breadcrumb bg-light mb-0">
+                <a class="breadcrumb-item text-dark" href="index.html">Home</a>
+                <span class="breadcrumb-item active">Email Verification</span>
+            </nav>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+
+
+<!-- Email Verification Start -->
+<div class="container-fluid auth-wrapper">
+    <div class="row px-xl-5 justify-content-center w-100">
+        <div class="col-lg-5 col-md-7">
+            <div class="bg-light p-30">
+                <h3 class="mb-3 text-center">Verify Your Email</h3>
+                <p class="text-muted text-center mb-4">
+                    Enter your registered email address to continue
+                </p>
+                <% if (error && error.length > 0) { error.forEach(function(e) { %>
+                    <div class="alert alert-danger"><%= e.msg %></div>
+                <% } ) }  %>
+                <form action="/email-varify" method="POST">
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" class="form-control" name="email" placeholder="example@email.com" value="<%= oldInput.email || '' %>" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block py-2 mb-3">
+                        Verify Email
+                    </button>
+                </form>
+
+                <div class="text-center">
+                    <small>
+                        Remember your password?
+                        <a href="/login">Login</a>
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('layouts/footer') %>

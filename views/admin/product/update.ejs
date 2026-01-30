@@ -1,0 +1,434 @@
+<%- include('../layouts/header')%>
+<style>
+    .pImage {position: relative; padding: 20px;}
+    .uploadedImages { display: flex; }
+    .pImage button { position: absolute; left: 190px; top: 1px; padding: 5px !important;}
+</style>
+    <div class="pcoded-main-container">
+        <div class="pcoded-content">
+            <!-- [ breadcrumb ] start -->
+            <div class="page-header">
+                <div class="page-block">
+                    <div class="row align-items-center">
+                        <div class="col-md-12">
+                            <div class="page-header-title">
+                                <h5 class="m-b-10">Update product</h5>
+                            </div>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="index.html"><i class="feather icon-home"></i></a>
+                                </li>
+                                <li class="breadcrumb-item"><a href="#!">Update product</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- [ breadcrumb ] end -->
+            <!-- [ Main Content ] start -->
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Update Product</h5>
+                    </div>
+                    <div class="card-body">
+                        <form action="/admin/prouct-update/<%= products.slug %>" method="POST" enctype="multipart/form-data">
+                            <div class="row">
+                                <!-- Product Name -->
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="productName">Product Name *</label>
+                                        <% if (error && error.length> 0) {
+                                            error.forEach(function(e) {
+                                            if(e.path == 'product_name'){ %>
+                                            <p class="text-danger m-0">
+                                                <%= e.msg %>
+                                            </p>
+                                        <% } }) } %>
+                                        <input type="text" class="form-control" name="product_name"
+                                        value="<%= oldInput[0] ? oldInput[0].product_name : products.product_name %>"   placeholder="Enter product name" >
+                                    </div>
+                                </div>
+
+                                <!-- Category -->
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="category">Category *</label>
+                                        <% if (error && error.length> 0) {
+                                            error.forEach(function(e) {
+                                            if(e.path == 'category_id'){ %>
+                                            <p class="text-danger m-0">
+                                                <%= e.msg %>
+                                            </p>
+                                        <% } }) } %>
+                                        <select class="form-control" id="category" name="category_id" >
+                                            <option selected disabled>Select Category</option>
+                                            <% if(categories && categories.length> 0){
+                                                categories.forEach((category)=>{
+                                                %>
+                                          <option value="<%= category._id %>" <%= oldInput[0] ? (String(oldInput[0].category_id) === String(category._id) ? 'selected' : '') : (String(products.category_id) === String(category._id) ? 'selected' : '') %> >
+                                             <%= category.category_name %>
+                                          </option>
+                                                <% } ) } %>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Sub-category -->
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="subCategory">Sub-category</label>
+                                        <select class="form-control" id="subCategory" name="subcategory_id">
+                                            <option selected disabled>Select Sub-category</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <!-- Price -->
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="price">Price *</label>
+                                        <% if (error && error.length> 0) {
+                                            error.forEach(function(e) {
+                                            if(e.path == 'price'){ %>
+                                            <p class="text-danger m-0">
+                                                <%= e.msg %>
+                                            </p>
+                                        <% } }) } %>
+                                        <input type="number" class="form-control" name="price"
+                                         value="<%= oldInput[0] ? oldInput[0].price : products.price %>"   placeholder="Enter price" >
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="discountPrice">Discount Price *</label>
+                                        <% if (error && error.length> 0) {
+                                            error.forEach(function(e) {
+                                            if(e.path == 'discount'){ %>
+                                            <p class="text-danger m-0">
+                                                <%= e.msg %>
+                                            </p>
+                                        <% } }) } %>
+                                        <input type="number" class="form-control"
+                                        value="<%= oldInput[0] ? oldInput[0].discount : products.discount %>"   name="discount" placeholder="Enter discount price">
+                                    </div>
+                                </div>
+                                <!-- Stock Quantity -->
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="stockQuantity">Stock Quantity *</label>
+                                        <% if (error && error.length> 0) {
+                                            error.forEach(function(e) {
+                                            if(e.path == 'stock'){ %>
+                                            <p class="text-danger m-0">
+                                                <%= e.msg %>
+                                            </p>
+                                        <% } }) } %>
+                                        <input type="number" class="form-control"
+                                        value="<%= oldInput[0] ? oldInput[0].stockQuantity : products.stock %>"   name="stock" placeholder="Enter stock quantity" >
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="shippingFee">Shipping Fee *</label>
+                                        <% if (error && error.length> 0) {
+                                            error.forEach(function(e) {
+                                            if(e.path == 'shipping_price'){ %>
+                                            <p class="text-danger m-0">
+                                                <%= e.msg %>
+                                            </p>
+                                        <% } }) } %>
+                                        <input type="number" class="form-control" name="shipping_price"
+                                        value="<%= oldInput[0] ? oldInput[0].shippingFee : products.shipping_price %>"    placeholder="Enter shipping fee">
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="brandName">Brand Name *</label>
+                                        <% if (error && error.length> 0) {
+                                            error.forEach(function(e) {
+                                            if(e.path == 'brand_name'){ %>
+                                            <p class="text-danger m-0">
+                                                <%= e.msg %>
+                                            </p>
+                                        <% } }) } %>
+                                        <input type="text" class="form-control" name="brand_name"
+                                        value="<%= oldInput[0] ? oldInput[0].brand_name : products.brand_name %>"    placeholder="Enter brand name" >
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="sku">SKU (Stock Keeping Unit) *</label>
+                                        <% if (error && error.length> 0) {
+                                            error.forEach(function(e) {
+                                            if(e.path == 'sku'){ %>
+                                            <p class="text-danger m-0">
+                                                <%= e.msg %>
+                                            </p>
+                                        <% } }) } %>
+                                        <input type="text" class="form-control" name="sku"
+                                        value="<%= oldInput[0] ? oldInput[0].sku : products.sku %>" placeholder="Enter SKU" >
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="productCondition">Condition *</label>
+                                        <select class="form-control" name="condition">
+                                            <option value="new" <%= oldInput[0] ? "new" == oldInput[0].productCondition ? 'selected' : '' : '' %>>New</option>
+                                            <option value="refurbished" <%= oldInput[0] ? "refurbished" == oldInput[0].productCondition ? 'selected' : '' : '' %>>Refurbished</option>
+                                            <option value="used" <%= oldInput[0] ? "used" == oldInput[0].productCondition ? 'selected' : '' : '' %>>Used</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Product Tags -->
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="tags">Product Tags (optional)</label>
+                                        <input type="text" class="form-control" name="tags"
+                                        value="<%= oldInput[0] ? oldInput[0].tags : products.tags %>"    placeholder="Enter tags (comma separated)">
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="status">Status</label>
+                                        <% if (error && error.length> 0) {
+                                            error.forEach(function(e) {
+                                            if(e.path == 'status'){ %>
+                                            <p class="text-danger m-0">
+                                                <%= e.msg %>
+                                            </p>
+                                        <% } }) } %>
+                                        <select class="form-control" name="status">
+                                            <option value="true" <%= oldInput[0] ? 'active' == oldInput[0].status ? 'selected' : '' : ''%>>Active</option>
+                                            <option value="false" <%= oldInput[0] ? 'deactive' == oldInput[0].status ? 'selected' : '' : '' %>>Deactive</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+
+                            <div class="row">
+                                <!-- Variations Section -->
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="productVariations">Product Variations</label>
+                                        <div id="variationsContainer">
+                                            <!-- Dynamic variation fields will be added here -->
+                                            <button type="button" class="btn btn-secondary"
+                                                onclick="addVariationField('<%= ((variations?.variation?.length) || 1) + ((variations?.variation?.find(item => item.type === 'Color')?.values.length) || 0) - 1 %>')">Add Variation</button>
+                                            <button type="button" class="btn btn-secondary" onclick="addColorVariation('<%= ((variations?.variation?.length) || 1) + ((variations?.variation?.find(item => item.type === 'Color')?.values.length) || 0) - 1 %>')">
+                                                Add Color Variation
+                                            </button>
+                                        </div>
+                                        <% 
+                                           if(variations != null){
+                                           let i = 0
+                                           variations.variation.forEach((variation,vindex)=>{
+                                           if(variation.type != 'Color') { 
+                                         %> 
+                                        <div class="variation-field mt-3" id="variationField_<%= vindex + i + 1 %>">
+                                             <div class="row">
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group">
+                                                            <label for="variationType_">Variation Type</label>
+                                                            <input type="text" class="form-control" id="variationType_<%= vindex + i + 1 %>" name="variation_type[<%= vindex + i + 1 %>]" value="<%= variation.type %>" placeholder="e.g.  Size, Material" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group">
+                                                            <label for="variationOptions_">Options (comma separated)</label>
+                                                            <input type="text" class="form-control" id="variationOptions_<%= vindex + i + 1 %>" name="variations[<%= vindex + i + 1 %>]" value="<%= variation.values %>" placeholder="e.g. " required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4 mt-4">
+                                                        <div class="form-group">
+                                                            <button type="button" class="btn btn-danger" onclick="removeVariationField('<%= vindex + i + 1 %>')">Remove Variation</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                        </div>
+                                         
+                                <% }else{ variation.values.forEach((color,index)=>{  i = index %>   
+                                     <div class="variation-field mt-3" id="colorVariation_<%= vindex + index + 1 %>">
+                                         <div class="row">
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label>Variation Type</label>
+                                                    <input type="text"
+                                                        class="form-control"
+                                                        name="variation_type[<%= vindex + index + 1 %>]"
+                                                        value="Color"
+                                                        readonly>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label>Select Color</label>
+                                                    <input type="color"
+                                                        class="form-control"
+                                                        name="variations[<%= vindex + index + 1 %>]"
+                                                        value="<%= color %>">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4 mt-4">
+                                                <button type="button"
+                                                        class="btn btn-danger"
+                                                        onclick="removeColorVariation('<%= vindex + 1 %>')">
+                                                    Remove Color
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <% }) } })} %>     
+                                        
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <!-- Redesigned Image Uploader -->
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="productImages">Product Images</label>
+                                        <div id="imageUploader" class="image-uploader">
+                                          <div class="uploadedImages">
+                                           <% if(products.images[0].url.length > 0){ 
+                                                products.images[0].url.forEach((image,index) => {
+                                            %>
+                                            <div class="pImage">
+                                              <button type="button" class="btn btn-danger" onclick="deleteImage('<%= products.images[0].public_id[index]%>','<%= products._id %>')">Remove</button>
+                                              <img class="img-thumbnail mr-3" src="<%= image %>" width="200px">
+                                            </div>
+                                            
+                                            <% } ) }else{ %>
+                                                <p class="m-0 text-danger">Image not found</p> 
+                                            <% } %>
+                                          </div>
+                                            <div id="imageDropArea" class="image-drop-area"
+                                                onclick="document.getElementById('productImages').click()">
+                                                <p>Drag & Drop your images here or click to select files</p>
+                                                <input type="file" class="form-control-file" id="productImages"
+                                                    name="images[]" multiple accept="image/*"
+                                                    style="display: none;">
+                                            </div>
+                                            <div id="imagePreview" class="image-preview-container">
+                                                <!-- Image previews will appear here -->
+                                            </div>
+                                        </div>
+                                        <small class="form-text text-muted">You can upload multiple images.</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Product Description -->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="productDescription">Product Description *</label>
+                                        <% if (error && error.length> 0) {
+                                            error.forEach(function(e) {
+                                            if(e.path == 'description'){ %>
+                                            <p class="text-danger m-0">
+                                                <%= e.msg %>
+                                            </p>
+                                        <% } }) } %>
+                                        <textarea class="form-control" name="description"
+                                            rows="5" placeholder="Enter product description" ><%= products.description %></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="row">
+                                <div class="col-sm-12 d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary">Update Product</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- [ Main Content ] end -->
+        </div>
+    </div>
+
+
+    <script>
+      const selectedSubCategory = async()=>{
+         const selectedSubcategoryId = "<%= products.subcategory_id %>"
+           const id = document.getElementById('category').value
+            if (!id) {
+                return false;
+            }
+            await fetch(`/admin/displaysubcetegory/${id}`)
+                .then(response => response.json())
+                .then((data) => {
+                    const select = document.getElementById('subCategory')
+                    if (data.data.length > 0) {
+                        select.innerHTML = ''
+                        data.data.forEach(element => {
+                             select.innerHTML += `<option value="${element._id}" ${ element._id == selectedSubcategoryId ? 'selected' : '' } >${element.subcategory_name}</option>`
+                        });
+                    } else {
+                        select.innerHTML = '<option disabled>Data not found</option>'
+                    }
+                })
+                .catch((err) => { console.error(err) })
+      }
+
+      selectedSubCategory()
+
+        document.getElementById('category').addEventListener('change', async () => {
+            const id = document.getElementById('category').value
+            if (!id) {
+                return false;
+            }
+            await fetch(`/admin/displaysubcetegory/${id}`)
+                .then(response => response.json())
+                .then((data) => {
+                    const select = document.getElementById('subCategory')
+                    if (data.data.length > 0) {
+                        select.innerHTML = ''
+                        data.data.forEach(element => {
+                            select.innerHTML += `<option value="${element._id}">${element.subcategory_name}</option>`
+                        });
+                    } else {
+                        select.innerHTML = '<option disabled>Data not found</option>'
+                    }
+                })
+                .catch((err) => { console.error(err) })
+        })
+
+        const deleteImage = async(public_id,id)=>{
+            const publicId = public_id.split('/')
+
+            if (!publicId) {
+                return false;
+            }
+            await fetch(`/admin/productimage-delete/${publicId[1]}/${id}`,{
+                method: 'DELETE',
+                headers: { 'Content-Type':'application-json' }
+            })
+                .then(response => response.json())
+                .then((data) => {
+                    location.reload()
+                })
+                .catch((err) => { console.error(err) })
+        }
+
+    </script>
+    <%- include('../layouts/footer')%>

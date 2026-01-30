@@ -1,0 +1,154 @@
+<%- include('../layouts/header')%>
+    <div class="pcoded-main-container">
+        <div class="pcoded-content">
+            <!-- [ breadcrumb ] start -->
+            <div class="page-header">
+                <div class="page-block">
+                    <div class="row align-items-center">
+                        <div class="col-md-12">
+                            <div class="page-header-title">
+                                <h5 class="m-b-10">Update slider</h5>
+                            </div>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="index.html"><i class="feather icon-home"></i></a>
+                                </li>
+                                <li class="breadcrumb-item"><a href="#!">Update slider</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- [ breadcrumb ] end -->
+            <!-- [ Main Content ] start -->
+            <div class="col-sm-12">
+                <!-- <% if (success && success.length> 0) { %>
+                            <div class="alert alert-success">
+                                <%= success %>
+                            </div>
+                            <% } %> -->
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between">
+                        <h5>Update slider</h5>
+                        <a href="/admin/slider-list" class="btn btn-primary">Slider list</a>
+                    </div>
+                    <div class="card-body">
+                        <form action="/admin/slider-update/<%= Slider._id %>" method="POST" enctype="multipart/form-data">
+                            <div class="">
+                                <!-- Category Name -->
+                                <div class="row">
+                                    <div class="col-sm-6 form-group">
+                                        <label for="title">Title</label>
+                                        <% if (error && error.length> 0) {
+                                            error.forEach(function(e) {
+                                            if(e.path == 'title'){ %>
+
+                                            <p class="text-danger m-1">
+                                                <%= e.msg %>
+                                            </p>
+                                        <% } }) } %>
+
+                                                <input type="text" class="form-control" id="title"
+                                                name="title" placeholder="Enter title" value="<%= Slider.title %>" required>
+                                    </div>
+                                    <div class="col-sm-6 form-group">
+                                        <label for="category">Category *</label>
+                                        <% if (error && error.length> 0) {
+                                            error.forEach(function(e) {
+                                            if(e.path == 'category_id'){ %>
+                                            <p class="text-danger m-0">
+                                                <%= e.msg %>
+                                            </p>
+                                        <% } }) } %>
+                                        <select class="form-control" id="category" name="category_id" >
+                                            <option selected disabled>Select Category</option>
+                                            <% if(categories && categories.length> 0){
+                                                categories.forEach((category)=>{
+                                                %>
+                                                <option value="<%= category._id %>" <%= 
+                                                                                    oldInput && oldInput[0]
+                                                                                        ? (oldInput[0].category_id == category._id ? 'selected' : '')
+                                                                                        : (Slider && Slider.category_id == category._id ? 'selected' : '')
+                                                                                    %>>
+                                                    <%= category.category_name %>
+                                                </option>
+                                                <% } ) } %>
+                                        </select>
+                                    </div>
+                                    </div>
+                                    <div class="row">
+                                    <div class="col-sm-6 form-group">
+                                        <label for="subCategory">Sub-category</label>
+                                        <select class="form-control" id="subCategory" name="subcategory_id">
+                                            <option selected disabled>Select Sub-category</option>
+                                            <% if(Subcategory && Subcategory.length> 0){
+                                                Subcategory.forEach((subcategory)=>{
+                                            %>
+                                            <option value="<%= subcategory._id %>" <%= 
+                                                                                    oldInput && oldInput[0]
+                                                                                        ? (oldInput[0].category_id == subcategory._id ? 'selected' : '')
+                                                                                        : (Slider && Slider.subcategory_id == subcategory._id ? 'selected' : '')
+                                                                                    %>>
+                                                    <%= subcategory.subcategory_name %>
+                                                </option>
+                                            <% })} %>
+                                        </select>
+                                    </div>
+                                     <div class="col-sm-6 form-group">
+                                        <label for="image">Image</label>
+                                        <% if (error && error.length> 0) {
+                                            error.forEach(function(e) {
+                                            if(e.path == 'image'){ %>
+
+                                            <p class="text-danger m-1">
+                                                <%= e.msg %>
+                                            </p>
+                                        <% } }) } %>
+                                         <div class="d-flex">
+                                           <input type="file" class="form-control" id="image"
+                                           name="image" placeholder="Upload image">
+                                           <img src="<%= Slider.image[0].url %>" width="50px" height="50px">
+                                         </div>
+                                    </div>
+                                     <div class="col-sm-12 form-group">
+                                        <label for="description">Description</label>
+                                        <textarea class="form-control" name="description" id="" placeholder="Enter description"><%= Slider.description %></textarea>
+                                    </div>
+                                    </div>
+                                   
+                            </div>
+                            <!-- Submit Button -->
+                            <div class="row">
+                                <div class="col-sm-12 d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary">Update Slider</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- [ Main Content ] end -->
+        </div>
+    </div>
+<script>
+     document.getElementById('category').addEventListener('change', async () => {
+            const id = document.getElementById('category').value
+            if (!id) {
+                return false;
+            }
+            await fetch(`/admin/displaysubcetegory/${id}`)
+                .then(response => response.json())
+                .then((data) => {
+                    const select = document.getElementById('subCategory')
+                    if (data.data.length > 0) {
+                        select.innerHTML = ''
+                        data.data.forEach(element => {
+                            select.innerHTML += `<option value="${element._id}">${element.subcategory_name}</option>`
+                        });
+                    } else {
+                        select.innerHTML = '<option disabled>Data not found</option>'
+                    }
+                })
+                .catch((err) => { console.error(err) })
+        })
+</script>
+<%- include('../layouts/footer')%>

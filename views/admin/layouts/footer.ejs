@@ -1,0 +1,38 @@
+ 
+ <script>
+     let id = ''
+     let deletedRow = ''
+        document.querySelectorAll('#deleteBtn').forEach((btn)=>{
+            btn.addEventListener('click',()=>{
+               deletedRow = document.getElementById(`${btn.dataset.id}`)
+               id = btn.dataset.id
+            })
+            
+        })
+ </script>
+
+ <!-- Required Js -->
+   
+    <script src="/admin/js/vendor-all.min.js"></script>
+    <script src="/admin/js/plugins/bootstrap.min.js"></script>
+    <script src="/admin/js/pcoded.min.js"></script>
+
+<!-- CKEditor Script (for Rich Text Editor) -->
+    <script src="https://cdn.ckeditor.com/ckeditor5/32.0.0/classic/ckeditor.js"></script>    
+
+<!-- Apex Chart -->
+    <script src="/admin/js/plugins/apexcharts.min.js"></script>
+    <script src="/admin/js/pages/chart-apex.js"></script>
+
+   <script src="https://cdn.datatables.net/v/bs5/dt-2.3.6/datatables.min.js" integrity="sha384-h8drA99ZjRhIv1cyWeNleFRr89bNrnvYdIG5Rc523s5jZLUmObH2k1ZxR8ldNEvJ" crossorigin="anonymous"></script>
+   <script>
+        new DataTable('#table');
+   </script>
+
+<!-- custom-chart js -->
+<script src="/admin/js/pages/dashboard-main.js"></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,110 @@
+<%- include('layouts/header') %>
+
+    <div class="container-fluid">
+    <div class="row px-xl-5">
+        <div class="col-12">
+            <nav class="breadcrumb bg-light mb-30">
+                <a class="breadcrumb-item text-dark" href="/">Home</a>
+                <a class="breadcrumb-item text-dark" href="/orders">My Orders</a>
+                <span class="breadcrumb-item active">Order Details</span>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<!-- Order Details -->
+<div class="container-fluid">
+    <div class="row px-xl-5">
+
+        <!-- Order Summary -->
+        <div class="col-lg-4 mb-4">
+            <div class="bg-light p-4 h-100">
+                <h5 class="mb-3">Order Summary</h5>
+
+                <p><strong>Order ID: </strong><%= order.razorpay_order_id %></p>
+                <p><strong>Order Date: </strong><%= new Date(order.updatedAt).toLocaleDateString() %></p>
+                <p><strong>Payment Method: </strong>Razorpay</p>
+                <p>
+                    <strong>Status:</strong>
+                    <span class="badge <%= order.status === 'pending'
+                                        ? 'badge badge-warning'
+                                        : order.status === 'cancelled'
+                                        ? 'badge badge-danger'
+                                        : 'badge badge-success'
+                                       %>"><%= order.status %></span>
+                </p>
+
+                <hr>
+
+                <h6>Shipping Address</h6>
+                <p class="mb-0">
+                    <%= order.shipping_address %>
+                </p>
+            </div>
+        </div>
+
+        <!-- Order Items -->
+        <div class="col-lg-8">
+            <div class="bg-light p-4 mb-4">
+                <div class="d-flex justify-content-between align-items-center py-2">
+                    <h5 class="m-0">Ordered Items</h5>
+                    <a href="/order-track/<%= order._id %>" class="btn btn-primary">Order track</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered text-center mb-0">
+                        <thead class="bg-secondary text-dark">
+                            <tr>
+                                <th>Product</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody class="align-middle">
+                            <% let shipping = 0  %>
+                            <% if(order){
+                               
+                               order.items.forEach((item,index)=>{
+                               shipping += item.product_id.shipping_price
+                            %>
+                             
+                            <tr>
+                                <td class="text-left">
+                                    <img src="<%= item.product_id.images[0].url[0] %>" alt="" style="width: 50px;">
+                                    <a href="/product-detail/item.product_id.slug"><%= item.product_id.product_name %></a>
+                                </td>
+                                <td>₹ <%= item.product_id.price - item.product_id.discount %></td>
+                                <td><%= item.quantity %></td>
+                                <td>₹ <%= item.product_id.price - item.product_id.discount * item.quantity%></td>
+                            </tr>
+                           <% }) } %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Price Details -->
+            <div class="bg-light p-4">
+                <h5 class="mb-3">Price Details</h5>
+
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Subtotal</span>
+                    <span>₹ <%= order.total %></span>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Shipping</span>
+                    <span>₹ <%= shipping %></span>
+                </div>
+                <hr>
+
+                <div class="d-flex justify-content-between font-weight-bold">
+                    <span>Total</span>
+                    <span>₹ <%= order.total %></span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<%- include('layouts/footer') %>

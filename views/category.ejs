@@ -1,0 +1,275 @@
+<%- include('layouts/header') %>
+
+<!-- Breadcrumb Start -->
+<div class="container-fluid">
+  <div class="row px-xl-5">
+    <div class="col-12">
+      <nav class="breadcrumb bg-light mb-3">
+        <a class="breadcrumb-item text-dark" href="/">Home</a>
+        <% if(categories) { 
+            categories.forEach((category)=>{ 
+              if(String(category._id) == String(currentCategoryId)){
+        %>
+          <a href="/category/<%= category._id %>" class="breadcrumb-item text-dark"><%= category.category_name %></a>
+        <% }} )}else{  %>
+          <a href="/category" class="breadcrumb-item text-dark">Category</a>
+        <% } %>
+      </nav>
+    </div>
+  </div>
+</div>
+<!-- Breadcrumb End -->
+
+<!-- Shop Start -->
+<div class="container-fluid">
+  <div class="row px-xl-5">
+    <!-- Shop Sidebar Start -->
+    <div class="col-lg-3 col-md-4 d-none d-md-block">
+      <h5 class="section-title position-relative text-uppercase mb-3">
+        <span class="bg-secondary pr-3">Categories</span>
+      </h5>
+      <div class="bg-light p-4 mb-3">
+        <form action="/search">
+          <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+            <input type="checkbox" class="custom-control-input" id="category-all" name="category[]" value="all" checked>
+            <label class="custom-control-label" for="category-all">All Categories</label>
+          </div>
+          <% if(Subcategory) {
+              Subcategory.forEach((subcategory)=>{ %>
+          <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+            <input type="checkbox" class="custom-control-input categories" data-id="<%= subcategory._id %>" id="subcategory-<%= subcategory._id %>" name="subcategory[]" value="<%= subcategory._id %>" <%= String(subcategoryid) == String(subcategory._id)? 'checked' : '' %> >
+            <label class="custom-control-label" for="subcategory-<%= subcategory._id %>"><%= subcategory.subcategory_name %></label>
+          </div>
+          <% }) } else if(categories) { 
+              categories.forEach((category)=>{ %>
+          <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+            <input type="checkbox" class="custom-control-input categories" data-id="<%= category._id %>" id="category-<%= category._id %>" name="category[]" value="<%= category._id %>">
+            <label class="custom-control-label" for="category-<%= category._id %>"><%= category.category_name %></label>
+          </div>
+          <% })} %>
+        </form>
+      </div>
+    </div>
+    <!-- Shop Sidebar End -->
+
+    <!-- Mobile Filter Button -->
+    <div class="col-12 d-md-none mb-3">
+      <button class="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#mobileFilter" aria-expanded="false" aria-controls="mobileFilter">
+        Filter Categories
+      </button>
+      <div class="collapse mt-2" id="mobileFilter">
+        <div class="bg-light p-3">
+          <form action="/search">
+            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-2">
+              <input type="checkbox" class="custom-control-input" id="category-all-mobile" name="category[]" value="all" checked>
+              <label class="custom-control-label" for="category-all-mobile">All Categories</label>
+            </div>
+            <% if(Subcategory) {
+                Subcategory.forEach((subcategory)=>{ %>
+            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-2">
+              <input type="checkbox" class="custom-control-input categories" data-id="<%= subcategory._id %>" id="subcategory-mobile-<%= subcategory._id %>" name="subcategory[]" value="<%= subcategory._id %>" <%= String(subcategoryid) == String(subcategory._id)? 'checked' : '' %>>
+              <label class="custom-control-label" for="subcategory-mobile-<%= subcategory._id %>"><%= subcategory.subcategory_name %></label>
+            </div>
+            <% }) } else if(categories) { 
+                categories.forEach((category)=>{ %>
+            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-2">
+              <input type="checkbox" class="custom-control-input categories" data-id="<%= category._id %>" id="category-mobile-<%= category._id %>" name="category[]" value="<%= category._id %>">
+              <label class="custom-control-label" for="category-mobile-<%= category._id %>"><%= category.category_name %></label>
+            </div>
+            <% })} %>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Shop Product Start -->
+    <div class="col-lg-9 col-md-8 col-12">
+      <div class="row pb-3">
+        <div class="col-12 pb-1">
+          <div class="d-flex align-items-center justify-content-between mb-4 flex-wrap">
+            <div class="mb-2">
+              <!-- <button class="btn btn-sm btn-light"><i class="fa fa-th-large"></i></button>
+              <button class="btn btn-sm btn-light ml-2"><i class="fa fa-bars"></i></button> -->
+            </div>
+            <div class="ml-2">
+              <div class="btn-group ml-2">
+                <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">Showing</button>
+                <div class="dropdown-menu dropdown-menu-right">
+                  <a class="dropdown-item" href="/category/<%= currentCategoryId %>?page=<%= products.page %>&limit=10">10</a>
+                  <a class="dropdown-item" href="/category/<%= currentCategoryId %>?page=<%= products.page %>&limit=20">20</a>
+                  <a class="dropdown-item" href="/category/<%= currentCategoryId %>?page=<%= products.page %>&limit=30">30</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row pb-3 m-auto" id="products">
+          <% if(products.docs.length > 0){ 
+              function shortTital(title){
+                const Title =  title.split(' ')
+                return `${Title[0]+' '+Title[1]}...`
+              }
+              products.docs.forEach((product)=>{ %>
+          <div class="col-lg-4 col-md-6 col-6 pb-3">
+            <a href="/product-detail/<%= product.slug %>">
+              <div class="product-item bg-light mb-4">
+                <div class="product-img position-relative overflow-hidden">
+                  <% if(product.images[0].url[0]) { %>
+                    <img src="<%= product.images[0].url[0] %>" class="w-100" style="height:250px; object-fit:scale-down;" alt="">
+                  <% }else{ %>
+                    <img src="img/no-image-available-icon-vector.jpg" class="w-100" style="height:250px; object-fit:scale-down;" alt="">
+                  <% } %>    
+                </div>
+                <div class="text-center py-3">
+                  <a href="/product-detail/<%= product.slug %>" class="h6 text-decoration-none text-truncate product-name"><%= shortTital(product.product_name) %></a>
+                  <div class="d-flex align-items-center justify-content-center mt-2">
+                    <h5 class="price">Rs.<%= product.price - product.discount %></h5>
+                    <h6 class="text-muted ml-2"><del><%= product.price %></del></h6>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+          <% }) } %>
+        </div>
+
+        <div class="col-12">
+          <nav>
+            <ul class="pagination justify-content-center" id="pagination">
+              <li class="page-item <%= products.hasPrevPage == false ? 'disabled' : '' %>">
+                <a class="page-link" href="/category/<%= currentCategoryId %>?page=<%= products.prevPage %>">Previous</a>
+              </li>
+              <% for(let i = 1; i <= products.totalPages; i++){ %>
+              <li class="page-item <%= i == products.page ? 'active' : '' %>">
+                <a class="page-link" href="/category/<%= currentCategoryId %>?page=<%= i %>"><%= i %></a>
+              </li>
+              <% } %>
+              <li class="page-item <%= products.hasNextPage == false ? 'disabled' : '' %>">
+                <a class="page-link" href="/category/<%= currentCategoryId %>?page=<%= products.nextPage %>">Next</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+    <!-- Shop Product End -->
+
+  </div>
+</div>
+
+
+<script>
+
+
+    //  function updatePrice(value) {
+    //     document.getElementById("priceValue").innerText = value;
+    //  }
+
+    const currentCategoryId = '<%= currentCategoryId %>'
+    const categoryAll = document.getElementById('category-all');
+    const categoryAllMobile = document.getElementById('category-all-mobile');
+    const categoryItems = document.querySelectorAll('.categories');
+    let checkedIds = []
+
+    document.addEventListener("DOMContentLoaded", function() {
+       if('<%= subcategoryid %>'){
+         getProduct('<%= subcategoryid %>')
+       }
+    });
+
+    function shortTital(title){
+       const Title =  title.split(' ')
+       return `${Title[0]+' '+ Title[1]}...`
+    }
+
+    function getProduct(ids = [],c_id,page=1,limit=9){
+            fetch(`/get-category-wise-products/?category=${encodeURIComponent(ids)}&id=${c_id}&page=${page}&limit=${limit}`)
+            .then(res => res.json())
+            .then(data => {
+          
+            const productsContainer = document.getElementById('products');
+            const pagination = document.getElementById('pagination');
+
+            if (data.products.docs.length > 0) {
+                
+                productsContainer.innerHTML = '';
+
+                data.products.docs.forEach(product => {
+                    const imgSrc = product.images && product.images[0]?.url[0] ? product.images[0].url[0] : 'img/no-image-available-icon-vector.jpg';
+                           productsContainer.innerHTML += `
+                                <div class="col-lg-4 col-md-6 col-6 pb-3">
+                                    <a href="/product-detail/${product.slug}">
+                                    <div class="product-item bg-light mb-4">
+                                        <div class="product-img position-relative overflow-hidden">
+                                            <img src="${imgSrc}" style="width:100%; height:250px; object-fit:cover;" alt="">
+                                        </div>
+                                        <div class="text-center py-3">
+                                            <a href="/product-detail/${product.slug}" class="h6 text-decoration-none text-truncate product-name">${shortTital(product.product_name)}</a>
+                                            <div class="d-flex align-items-center justify-content-center mt-2">
+                                                <h5 class="price">Rs.${product.price - product.discount}</h5>
+                                                <h6 class="text-muted ml-2"><del>${product.price}</del></h6>
+                                            </div>                           
+                                        </div>
+                                    </div>
+                                    </a>
+                                </div>
+                                `;
+                                
+                        });
+                        pagination.innerHTML = ''
+                            pagination.innerHTML += `
+                              <li class="page-item  ${ data.products.hasPrevPage == false ? 'disabled' : '' }"><a class="page-link" onclick="(getProduct('${ids}','${currentCategoryId}',${data.products.prevPage}))">Previous</span></a></li>`
+                                for(let i = 1; i <= data.products.totalPages; i++){ 
+                                    pagination.innerHTML += `<li class="page-item ${ i == data.products.page ? 'active' : '' }"><a class="page-link" onclick="(getProduct('${ids}','${currentCategoryId}',${i}))">${i}</a></li>`
+                                }     
+                            pagination.innerHTML += `<li class="page-item ${ data.products.hasNextPage == false ? 'disabled' : '' }"><a class="page-link" onclick="(getProduct('${ids}','${currentCategoryId}',${data.products.nextPage}))">Next</a></li>`
+                        
+                    }else{
+                        productsContainer.innerHTML = ''
+                    }
+                } 
+            );
+    }
+
+    
+    categoryAll.addEventListener('change', () => {
+        if (categoryAll.checked) {
+            categoryItems.forEach(item => item.checked = false);
+            checkedIds = []
+            getProduct([],currentCategoryId)
+        }
+    });
+
+    categoryItems.forEach(item => {
+        item.addEventListener('change', () => {
+            if (item.checked) {
+                categoryAll.checked = false;
+            } 
+            //convert nodelist to array and get all checked ids
+            checkedIds = Array.from(categoryItems).filter(inputBox => inputBox.checked).map(inputBox => inputBox.dataset.id);
+            getProduct(checkedIds,currentCategoryId)
+        });
+    });
+
+    categoryAllMobile.addEventListener('change', () => {
+        if (categoryAllMobile.checked) {
+            categoryItems.forEach(item => item.checked = false);
+            checkedIds = []
+            getProduct([],currentCategoryId)
+        }
+    });
+    
+    categoryItems.forEach(item => {
+        item.addEventListener('change', () => {
+            if (item.checked) {
+                categoryAllMobile.checked = false;
+            } 
+            //convert nodelist to array and get all checked ids
+            checkedIds = Array.from(categoryItems).filter(inputBox => inputBox.checked).map(inputBox => inputBox.dataset.id);
+            getProduct(checkedIds,currentCategoryId)
+        });
+    });
+
+</script> 
+<%- include('layouts/footer') %>

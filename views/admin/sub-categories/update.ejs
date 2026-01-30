@@ -1,0 +1,108 @@
+<%- include('../layouts/header')%>
+    <div class="pcoded-main-container">
+        <div class="pcoded-content">
+            <!-- [ breadcrumb ] start -->
+            <div class="page-header">
+                <div class="page-block">
+                    <div class="row align-items-center">
+                        <div class="col-md-12">
+                            <div class="page-header-title">
+                                <h5 class="m-b-10">Update Sub category</h5>
+                            </div>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="dashboard"><i class="feather icon-home"></i></a>
+                                </li>
+                                <li class="breadcrumb-item"><a href="#!">Update Sub category</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- [ breadcrumb ] end -->
+            <!-- [ Main Content ] start -->
+            <div class="col-sm-12">
+                <!-- <% if (success && success.length> 0) { %>
+                            <div class="alert alert-success">
+                                <%= success %>
+                            </div>
+                            <% } %> -->
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between">
+                        <h5>Update Subcategory</h5>
+                        <a href="/admin/subcategories" class="btn btn-primary">Sub category list</a>
+                    </div>
+                    <div class="card-body">
+                        <!-- <form action="/admin/category-update/<%= categories._id %>" method="POST"> -->
+                           <form action="/admin/subcategories-update/<%= subcategories._id %>" method="POST">
+                            <div class="row">
+                                <!-- Category Name -->
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="categoryname">Sub Category Name</label>
+                                        <% if (error && error.length> 0) {
+                                            error.forEach(function(e) {
+                                            if(e.path == 'subcategory_name'){ %>
+
+                                            <p class="text-danger m-1">
+                                                <%= e.msg %>
+                                            </p>
+                                            <% } }) } %>
+
+                                          <input type="text" class="form-control" id="categoryname"
+                                          name="subcategory_name" placeholder="Enter subcategory name" value="<%= subcategories.subcategory_name %>" required>
+                                    </div>
+                                </div>
+                                  <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="categoryname">Select category</label>
+                                        <% if (error && error.length> 0) {
+                                            error.forEach(function(e) {
+                                            if(e.path == 'categoryid'){ %>
+                                            <p class="text-danger m-1">
+                                                <%= e.msg %>
+                                            </p>
+                                            <% } }) } %>
+                                            <select class="form-control" name="categoryid">
+                                                <option selected disabled>Select Category</option>
+                                                <% if(categories && categories.length > 0) {
+                                                 categories.forEach((category)=>{ %>
+                                                  <option value="<%= category._id %>" <%= String(category._id)  == String(subcategories.categoryid) ? 'selected="selected"' : subcategories.categoryid %>><%= category.category_name %></option>
+                                                <% }) } %>
+                                            </select>
+                                    </div>
+                                </div>
+                                <!-- Status -->
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="status">Status</label>
+                                        <% if (error && error.length> 0) {
+                                            error.forEach(function(e) {
+                                            if(e.path == 'status'){ %>
+
+                                            <p class="text-danger m-1">
+                                                <%= e.msg %>
+                                            </p>
+                                        <% } }) } %>
+                                        <select class="form-control" id="status" name="status" required>
+                                            <option selected disabled>Select Category</option>
+                                            <option value="1" <%= subcategories.status == '1' ? 'selected="selected"' : '' %> >Active</option>
+                                            <option value="0" <%= subcategories.status == '0' ? 'selected="selected"' : '' %>>Deactive</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Submit Button -->
+                            <div class="row">
+                                <div class="col-sm-12 d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary">Update category</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- [ Main Content ] end -->
+        </div>
+    </div>
+
+    <%- include('../layouts/footer')%>

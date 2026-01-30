@@ -1,0 +1,145 @@
+<%- include('layouts/header')%>
+<!-- [ Main Content ] start -->
+<div class="pcoded-main-container">
+  <div class="pcoded-content">
+    <% if (error && error.length> 0) { %>
+    <div class="alert alert-danger"><%= error %></div>
+    <% } %> <% if (success && success.length> 0) { %>
+    <div class="alert alert-success"><%= success %></div>
+    <% } %>
+    <!-- [ breadcrumb ] start -->
+    <div class="page-header">
+      <div class="page-block">
+        <div class="row align-items-center">
+          <div class="col-md-12">
+            <div class="page-header-title">
+              <h5 class="m-b-10">Dashboard Analytics</h5>
+            </div>
+
+            <ul class="breadcrumb">
+              <li class="breadcrumb-item">
+                <a href="index.html"><i class="feather icon-home"></i></a>
+              </li>
+              <li class="breadcrumb-item">
+                <a href="#!">Dashboard Analytics</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- [ breadcrumb ] end -->
+    <!-- [ Main Content ] start -->
+     <div class="row">
+           <div class="col-xl-4 col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-12">
+                                <% let sales = 0
+                                   if(TotalSales){
+                                     TotalSales.forEach((sale)=>{
+                                        sales += sale.totalAmount
+                                     })
+                                   }
+                                %>
+                                <h3>Rs. <%= sales %></h3>
+                                <h6 class="text-muted m-b-0">Total Sales<i class="fa fa-caret-down text-c-red m-l-10"></i></h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           <div class="col-xl-4 col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-12">
+                                <h3><%= totalVerifiedUsers %></h3>
+                                <h6 class="text-muted m-b-0">Total varified users</a><i class="fa fa-caret-down text-c-red m-l-10"></i></h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-12">
+                                <h3><%= totalUnVerifiedUsers %></h3>
+                                <h6 class="text-muted m-b-0">Total un-varified users<i class="fa fa-caret-down text-c-red m-l-10"></i></h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-12">
+                                <h3><%= Totalproduct %></h3>
+                                <h6 class="text-muted m-b-0">Total Products<i class="fa fa-caret-down text-c-red m-l-10"></i></h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-12">
+                                <h3><%= TotalOrders %></h3>
+                                <h6 class="text-muted m-b-0">Total Complated Orders<i class="fa fa-caret-down text-c-red m-l-10"></i></h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-12">
+                                <h3><%= TotalCancelledOrders %></h3>
+                                <h6 class="text-muted m-b-0">Total Cancelled Orders<i class="fa fa-caret-down text-c-red m-l-10"></i></h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+      </div> 
+       <div class="row">
+           <div class="col-md-6 p-1">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Basic line chart</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="line-chart-1"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 p-1">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Pie Charts</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="pie-chart-1" style="width:100%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>   
+  </div>
+</div>
+<script>
+    const revenueData = <%- JSON.stringify(TotalSales || []) %>;
+    const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+    const labels = revenueData.map(item => months[item._id - 1]);
+    const seriesData = revenueData.map(item => item.totalAmount);
+</script>
+<%- include('layouts/footer')%>
+ 

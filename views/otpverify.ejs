@@ -1,0 +1,84 @@
+<%- include('layouts/header')%>
+<style>
+    .auth-wrapper {
+            min-height: calc(100vh - 200px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .otp-input {
+            width: 55px;
+            height: 55px;
+            text-align: center;
+            font-size: 20px;
+            margin-right: 10px;
+        }
+</style>
+
+<div class="container-fluid">
+    <div class="row px-xl-5">
+        <div class="col-12">
+            <nav class="breadcrumb bg-light mb-0">
+                <a class="breadcrumb-item text-dark" href="index.html">Home</a>
+                <span class="breadcrumb-item active">OTP Verification</span>
+            </nav>
+            <% if (success && success.length > 0) { success.forEach(function(e) { %>
+              <div class="alert alert-success"><%= e.message %></div>
+            <% } ) }  %>
+        </div>
+    </div>
+</div>
+<!-- OTP -->
+<div class="container-fluid auth-wrapper">
+    <div class="row px-xl-5 justify-content-center w-100">
+        <div class="col-lg-5 col-md-7">
+            <div class="bg-light p-30 text-center">
+                <h3 class="mb-3">Verify OTP</h3>
+                <% if (error && error.length > 0) { error.forEach(function(e) { %>
+                  <div class="alert alert-danger"><%= e.message %></div>
+                <% } ) }  %>
+                <p class="text-muted mb-4">
+                    Enter the 4-digit code sent to your email
+                </p>
+
+                <form action="/verify/<%= email %>" method="POST">
+                    <div class="d-flex justify-content-center mb-4">
+                        <input type="text" maxlength="1" name="otp" class="form-control otp-input">
+                        <input type="text" maxlength="1" name="otp" class="form-control otp-input">
+                        <input type="text" maxlength="1" name="otp" class="form-control otp-input">
+                        <input type="text" maxlength="1" name="otp" class="form-control otp-input">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block py-2 mb-3">
+                        Verify OTP
+                    </button>
+                </form>
+
+                <small class="text-muted">
+                    Didn’t receive code?
+                    <a href="/resendotp/<%= email %>">Resend OTP</a>
+                </small>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+  const inputs = document.querySelectorAll(".otp-input");
+
+  inputs.forEach((input, index) => {
+    input.addEventListener("input", () => {
+      if (input.value.length === 1 && index < inputs.length - 1) {
+        inputs[index + 1].focus();
+      }
+    });
+
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Backspace" && !input.value && index > 0) {
+        inputs[index - 1].focus();
+      }
+    });
+  });
+</script>
+
+<%- include('layouts/footer')%>

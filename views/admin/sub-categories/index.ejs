@@ -1,0 +1,119 @@
+<%- include('../layouts/header')%>
+    <link href="https://cdn.datatables.net/v/bs5/dt-2.3.6/datatables.min.css" rel="stylesheet"
+        integrity="sha384-Op52dEl5kUgSEZdHZBipbmlFw81qZygnw1QZv+p1KFhUsirA7OJQnkaHgcJmXCTj" crossorigin="anonymous">
+    <div class="pcoded-main-container">
+        <div class="pcoded-content">
+            <!-- [ breadcrumb ] start -->
+            <div class="page-header">
+                <div class="page-block">
+                    <div class="row align-items-center">
+                        <div class="col-md-12">
+                            <div class="page-header-title">
+                                <h5 class="m-b-10">Sub Category List</h5>
+                            </div>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="index.html"><i class="feather icon-home"></i></a>
+                                </li>
+                                <li class="breadcrumb-item"><a href="#!">Sub Categories</a></li>
+                                <li class="breadcrumb-item"><a href="#!">Sub Category List</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between">
+                        <h5>Sub Category List</h5>
+                        <a href="/admin/subcategories-create" class="btn btn-primary">Add Subcategory</a>
+                    </div>
+
+                    <div class="card-body table-border-style">
+                        <% if (success && success.length> 0) { success.forEach(function(e) { %>
+                            <div class="alert alert-success">
+                                <%= e %>
+                            </div>
+                        <% } ) } %>
+                                <div class="table-responsive">
+                                    <table class="table table-striped" id="table">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Sub Category Name</th>
+                                                <th>Category name</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% if(subcategories && subcategories.length> 0) {
+                                                subcategories.forEach((e,i)=>{
+                                                %>
+                                                <tr id="category<%= e._id %>">
+                                                    <td>
+                                                        <%= i+1 %>
+                                                    </td>
+                                                    <td>
+                                                        <%= e.subcategory_name %>
+                                                    </td>
+                                                    <td>
+
+                                                        <%= e.categoryid.category_name %>
+                                                    </td>
+                                                    <td>
+                                                        <%= e.status == true ? 'Active' : 'Deactive' %>
+                                                    </td>
+                                                    <td><a href="subcategories-edit/<%= e._id %>"
+                                                            class="btn btn-icon btn-outline-primary mr-2"><i
+                                                                class="feather icon-edit"></i></a><button type="button"
+                                                            class="btn btn-icon btn-outline-danger mr-2" id="deleteBtn"
+                                                            data-id="<%= e._id %>" data-toggle="modal"
+                                                            data-target="#exampleModalLive"><i
+                                                                class="feather icon-trash"></i></button></td>
+                                                </tr>
+                                                <% })} %>
+                                        </tbody>
+                                    </table>
+                                </div>
+                    </div>
+                </div>
+                <div id="exampleModalLive" class="modal fade" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLiveLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLiveLabel">Delete category</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
+                            </div>
+                            <div class="modal-body">
+                                <p class="mb-0">Are you sure!</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn  btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn  btn-danger" id="deleteSubCategory">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+         document.getElementById('deleteSubCategory').addEventListener('click',async()=>{
+           if(!id || id == '') return
+           try{
+              const category = await fetch(`/admin/subcategories-delete/${id}`,{
+                method : 'DELETE'
+              })
+              if(category.ok){
+                 location.reload()
+              }else{
+                 alert('SubCategory delete failed')
+              }
+           }catch(error){
+              console.log(error)
+           }
+       })
+    </script>
+    <%- include('../layouts/footer')%>

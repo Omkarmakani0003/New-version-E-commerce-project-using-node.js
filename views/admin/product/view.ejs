@@ -1,0 +1,207 @@
+<%- include('../layouts/header')%>
+    <div class="pcoded-main-container">
+        <div class="pcoded-content">
+            <!-- [ breadcrumb ] start -->
+            <div class="page-header">
+                <div class="page-block">
+                    <div class="row align-items-center">
+                        <div class="col-md-12">
+                            <div class="page-header-title">
+                                <h5 class="m-b-10">product detail</h5>
+                            </div>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="index.html"><i class="feather icon-home"></i></a>
+                                </li>
+                                <li class="breadcrumb-item"><a href="#!">product detail</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- [ breadcrumb ] end -->
+            <!-- [ Main Content ] start -->
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>product detail</h5>
+                    </div>
+                    <div class="card-body">
+                            <div class="row">
+                                <!-- Product Name -->
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="productName">Product Name</label>
+                                        <input type="text" class="form-control"
+                                        value="<%= products.product_name %>" disabled>
+                                    </div>
+                                </div>
+
+                                <!-- Category -->
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="category">Category</label>
+                                        <input type="text" class="form-control"
+                                        value="<%= categories.category_name %>" disabled>
+                                    </div>
+                                </div>
+
+                                <!-- Sub-category -->
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="subCategory">Sub-category</label>
+                                        <% if(subcategories && subcategories != ''){  %>
+                                           <input type="text" class="form-control"
+                                            value="<%= subcategories.subcategory_name %>" disabled> 
+                                        <% } %>    
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <!-- Price -->
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="price">Price ($)</label>
+                                        <input type="text" class="form-control"
+                                        value="<%= products.price %>" disabled>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="discountPrice">Discount Price ($)</label>
+                                        <input type="text" class="form-control"
+                                        value="<%= products.discount %>" disabled>
+                                    </div>
+                                </div>
+                                <!-- Stock Quantity -->
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="stockQuantity">Stock Quantity</label>
+                                       <input type="text" class="form-control"
+                                        value="<%= products.stock %>" disabled>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="shippingFee">Shipping Fee ($)</label>
+                                        <input type="text" class="form-control"
+                                        value="<%= products.shipping_price %>" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="brandName">Brand Name</label>
+                                        <input type="text" class="form-control"
+                                        value="<%= products.brand_name %>" disabled>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="sku">SKU (Stock Keeping Unit)</label>
+                                       <input type="text" class="form-control"
+                                        value="<%= products.sku %>" disabled>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="productCondition">Condition</label>
+                                        <input type="text" class="form-control"
+                                        value="<%= products.condition %>" disabled>
+                                    </div>
+                                </div>
+
+                                <!-- Product Tags -->
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="tags">Product Tags (optional)</label>
+                                         <% if(products.tags){  %>
+                                           <input type="text" class="form-control"
+                                            value="<%= products.tags %>" disabled> 
+                                        <% } %>   
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="status">Status</label>
+                                        <input type="text" class="form-control"
+                                        value="<%= products.status == true ? 'Active' : 'Deactive' %>" disabled> 
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <!-- Variations Section -->
+                            <% if(variations) {%>
+                                <div class="col-sm-8">
+                                    <div class="form-group">
+                                      <label for="productVariations">Product Variations</label>     
+                                        <table class="table table-striped">
+                                             <% variations.variation.forEach(function(variation){ %>
+                                                  <tr>
+                                                     <td><%= variation.type %></td>
+                                                     <% if(variation.type != 'Color'){ %>
+                                                       <th><%= variation.values %></th>
+                                                    
+                                                        <% }else{   %>
+                                                          <th class="d-flex">
+                                                            <% variation.values.forEach((color)=>{ %>
+                                                             <div class="colorVariation" style="background-color: <%= color %>;"></div>
+                                                            <% }) %>
+                                                         </th> 
+                                                        <% } %> 
+                                                     
+                                                  </tr>
+                                             <% }) %>
+                                        </table>
+                                    </div> 
+                                  </div>
+                                <% } %> 
+                            </div>
+
+                            <div class="row">
+                                <!-- Redesigned Image Uploader -->
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="productImages">Product Images</label>
+                                        <div id="imageUploader" class="image-uploader">
+                                            <% if(products.images[0].url.length > 0){ 
+                                                products.images[0].url.forEach((image) => {
+                                            %>
+                                            <img class="img-thumbnail mr-3" src="<%= image %>" width="200px">
+                                            <% } ) }else{ %>
+                                                <p class="m-0 text-danger">Image not found</p> 
+                                            <% } %>    
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Product Description -->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="productDescription">Product Description</label>
+                                        <textarea class="form-control" name="description"
+                                            rows="5" placeholder="Enter product description" ><%= products.description %></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <!-- [ Main Content ] end -->
+        </div>
+    </div>
+
+
+
+    <%- include('../layouts/footer')%>

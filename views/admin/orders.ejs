@@ -1,0 +1,149 @@
+<%- include('layouts/header')%>
+<div class="pcoded-main-container">
+  <div class="pcoded-content">
+    <!-- [ breadcrumb ] start -->
+    <div class="page-header">
+      <div class="page-block">
+        <div class="row align-items-center">
+          <div class="col-md-12">
+            <div class="page-header-title">
+              <h5 class="m-b-10">Order List</h5>
+            </div>
+            <ul class="breadcrumb">
+              <li class="breadcrumb-item">
+                <a href="index.html"><i class="feather icon-home"></i></a>
+              </li>
+              <li class="breadcrumb-item"><a href="#!">Order</a></li>
+              <li class="breadcrumb-item"><a href="#!">Order List</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-12">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between">
+          <h5>Order List</h5>
+          
+        </div>
+        <div class="card-body table-border-style">
+          <div class="table-responsive">
+            <table class="table table-striped" id="table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>order id</th>
+                  <th>date</th>
+                  <th>order status</th>
+                  <th>payment status</th>
+                  <th>action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% if(order){
+                   order.forEach((Order,index)=>{
+                %>
+                <tr>
+                   <td><%= index + 1 %></td>
+                   <td><%= Order.razorpay_order_id %></td>
+                   <td><%= new Date(Order.updatedAt).toLocaleDateString() %></td>
+                   <td>
+                      <select onchange="updateStatus(`<%= Order._id %>`)" id="status_<%= Order._id %>" class="form-control <%= 
+                              (Order.status == 'shipped' || Order.status == 'delivered') ? 'badge-success' : 
+                              (Order.status == 'cancelled') ? 'badge-danger' : 'badge-info' %> ">
+                      
+                        <option value="pending" <%= Order.status == 'pending'? 'selected' : '' %> >Pending</option>
+                        <option value="processing" <%= Order.status == 'processing'? 'selected' : '' %> >Processing</option>
+                        <option value="delivered" <%= Order.status == 'delivered'? 'selected' : '' %> >Delivered</option>
+                        <option value="shipped" <%= Order.status == 'shipped'? 'selected' : '' %> >Shipped</option>
+                        <option value="cancelled"  <%= Order.status == 'cancelled'? 'selected' : '' %> >Cancelled</option>
+                      </select>  
+      
+                   </td>
+                   <td ><p class="p-2 badge <%= 
+                              (Order.payment_status == 'paid' || Order.payment_status == 'delivered') ? 'badge-success' : 
+                              (Order.payment_status == 'cancelled' || Order.payment_status == 'failed') ? 'badge-danger' : 'badge-info' %>"><%= Order.payment_status %></p>
+                   </td>
+                   <td><a href="/admin/view-order/<%= Order._id %>"
+                     class="btn btn-icon btn-outline-info mr-2"
+                     ><i class="feather icon-eye"></i></a></td>
+                </tr>
+                <% }) } %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div
+        id="exampleModalLive"
+        class="modal fade"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalLiveLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLiveLabel">
+                Delete slider
+              </h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p class="mb-0">Are you sure!</p>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="button" class="btn btn-danger" id="deleteSlider">
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  function updateStatus(id){
+
+    const status = document.getElementById(`status_${id}`).value
+    const data = { 'status': status,'id':id }
+
+    if(!status){
+      alert('something went wrong')
+      return false
+    }
+    
+    fetch('/admin/update-status', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    }).then(res => res.json())
+      .then(data => {
+        if(data.success){
+            alert('order status updated successfully')
+            window.location.reload()
+        }else{
+           alert(data.message)
+           window.location.reload()
+        }
+    })
+  }
+</script>
+<%- include('layouts/footer')%>
+

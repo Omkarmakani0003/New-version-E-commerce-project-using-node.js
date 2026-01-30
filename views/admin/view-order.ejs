@@ -1,0 +1,189 @@
+<%- include('layouts/header') %>
+
+<div class="pcoded-main-container">
+    <div class="pcoded-content">
+
+        <!-- Breadcrumb -->
+        <div class="page-header">
+            <div class="page-block">
+                <div class="row align-items-center">
+                    <div class="col-md-12">
+                        <div class="page-header-title">
+                            <h5 class="m-b-10">Order Detail</h5>
+                        </div>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="/admin/dashboard">
+                                    <i class="feather icon-home"></i>
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a href="/admin/orders">Orders</a>
+                            </li>
+                            <li class="breadcrumb-item">Order Detail</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="col-sm-12">
+            <div class="card">
+
+                <div class="card-header">
+                    <h5>Order Information</h5>
+                </div>
+
+                <div class="card-body">
+
+                    <!-- Order Info -->
+                    <div class="row mb-3">
+                        <div class="col-sm-4">
+                            <strong>Order ID:</strong>
+                            <p class="text-muted mb-0"><%= order._id %></p>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <strong>Order Date:</strong>
+                            <p class="text-muted mb-0"><%= order.createdAt %></p>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <strong>Status:</strong>
+                            <span class="badge <%= order.status == 'delivered' ? 'badge-success' : 'badge-info' %> <%= order.status == 'cancelled' ? 'badge-danger' : 'badge-info' %>"><%= order.status %></span>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <!-- Shipping Address -->
+                    <h6 class="mb-3">Shipping Address</h6>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <p class="text-muted mb-0">
+                                <%= order.shipping_address %>
+                            </p>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <!-- Products -->
+                    <h6 class="mb-3">Ordered Products</h6>
+
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Product</th>
+                                    <th>Variations</th>
+                                    <th>Price ($)</th>
+                                    <th>Shipping fees ($)</th>
+                                    <th>Qty</th>
+                                    <th>Total ($)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                <% order.items.forEach(function(item, index){ %>
+                                    <tr>
+                                        <td><%= index + 1 %></td>
+
+                                        <td>
+                                            <strong><%= item.product_id.product_name %></strong>
+                                        </td>
+
+                                        <!-- Variations -->
+                                        <td>
+                                               <ul class="list-unstyled mb-0">
+                                            <% if(item.variation && item.variation.length > 0){
+                                                item.variation.forEach(function(variations){ %>
+                                                <% for(let key in variations){ %>
+                                                    <li>
+                                                        <strong><%= key %>:</strong>
+                                                        
+                                                        <% if(key.toLowerCase() === 'color'){ %>
+                                                            <!-- Render color swatch -->
+                                                            <span
+                                                                style="
+                                                                    display:inline-block;
+                                                                    width:16px;
+                                                                    height:16px;
+                                                                    border-radius:50%;
+                                                                    background-color:<%= variations[key] %>;
+                                                                    border:1px solid #ccc;
+                                                                    margin-left:5px;">
+                                                            </span>
+                                                        <% } else { %>
+                                                            <span class="text-muted"><%= variations[key] %>,</span>
+                                                        <% } %>
+                                                    </li>
+                                                <% } %>
+                                            <% })}else{ %>
+                                            
+                                              <% for(let key in item.variation){ %>
+                                                <li>
+                                                        <strong><%= key %>:</strong>
+                                                        <% if(key.toLowerCase() === 'color'){ %>
+                                                            <!-- Render color swatch -->
+                                                            <span
+                                                                style="
+                                                                    display:inline-block;
+                                                                    width:16px;
+                                                                    height:16px;
+                                                                    border-radius:50%;
+                                                                    background-color:<%= item.variation[key] %>;
+                                                                    border:1px solid #ccc;
+                                                                    margin-left:5px;">
+                                                            </span>
+                                                        <% } else { %>
+                                                            <span class="text-muted"><%= item.variation[key] %>,</span>
+                                                        <% } %>
+                                                </li>        
+                                              <% } %>    
+                                            <% } %>
+                                            </ul>
+                                        </td>
+
+                                        <td><%= item.price %></td>
+                                        <td><%= item.product_id.shipping_price %></td>
+                                        <td><%= item.quantity %></td>
+                                        <td><%= item.price * item.quantity + item.product_id.shipping_price %></td>
+                                    </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <hr>
+
+                    <!-- Payment Summary -->
+                    <h6 class="mb-3">Payment Summary</h6>
+
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <strong>Payment Method:</strong>
+                            <p class="text-muted mb-0"><%= order.payment_method %></p>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <strong>Payment Status:</strong>
+                            <p class="text-muted mb-0"><%= order.payment_status %></p>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <strong>Grand Total:</strong>
+                            <h5 class="text-success">$<%= order.total %></h5>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<%- include('layouts/footer') %>

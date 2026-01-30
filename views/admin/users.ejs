@@ -1,0 +1,60 @@
+<%- include('layouts/header')%>
+
+<div class="pcoded-main-container">
+  <div class="pcoded-content">
+    <!-- [ breadcrumb ] start -->
+    <div class="page-header">
+      <div class="page-block">
+        <div class="row align-items-center">
+          <div class="col-md-12">
+            <div class="page-header-title">
+              <h5 class="m-b-10">Users List</h5>
+            </div>
+            <ul class="breadcrumb">
+              <li class="breadcrumb-item">
+                <a href="index.html"><i class="feather icon-home"></i></a>
+              </li>
+              <li class="breadcrumb-item"><a href="#!">Users</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-12">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between">
+          <h5>Users</h5>
+        </div>
+        <div class="card-body table-border-style">
+
+          <div class="table-responsive">
+            <table class="table table-striped" id="table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>User Name</th>
+                  <th>Email</th>
+                  <th>Varification</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% if(users) {
+                   users.forEach((user,index)=>{
+                %>
+                 <tr>
+                    <td><%= index + 1 %></td>
+                    <td><%= user.name %></td>
+                    <td><%= user.email %></td>
+                    <td><span class="badge <%= user.is_varify == true ? 'badge-success' : 'badge-danger' %>"><%= user.is_varify == true ? 'VARIFIED' : 'NOT VARIFIED' %></span></td>
+                 </tr>
+               <% })} %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('layouts/footer')%>

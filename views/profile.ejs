@@ -1,0 +1,93 @@
+<%- include('layouts/header') %>
+
+<div class="container-fluid">
+    <div class="row px-xl-5">
+        <div class="col-12">
+            <nav class="breadcrumb bg-light mb-4">
+                <a class="breadcrumb-item text-dark" href="index.html">Home</a>
+                <span class="breadcrumb-item active">My Profile</span>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<!-- Profile Section -->
+<div class="container-fluid">
+    <div class="row px-xl-5">
+<div class="toast-container position-fixed top-0 end-0 p-4">
+           <% if (success && success.length > 0) { success.forEach(function(e) { %>
+           <div class="toast align-items-center text-bg-success border-0 show">
+            <div class="d-flex align-items-center">
+              <div class="toast-body">
+                <%= e.message %>
+              </div>
+              <button type="button" class="btn-close btn-close-white ms-auto me-2" data-bs-dismiss="toast" aria-label="Close"></button>
+             </div>
+          </div>
+       <% } ) }  %>
+    </div>
+        <!-- Sidebar -->
+        <div class="col-lg-3 col-md-4 mb-4">
+            <div class="bg-light p-30 text-center">
+               
+                <h5 class="mb-1"><%= user.name %></h5>
+                <p class="text-muted mb-3"><%= user.email %></p>
+
+                <a href="#" class="btn btn-outline-primary btn-sm btn-block mb-2">
+                    <i class="fa fa-box mr-1"></i> My Orders
+                </a>
+                <a href="/logout" class="btn btn-outline-danger btn-sm btn-block">
+                    <i class="fa fa-sign-out-alt mr-1"></i> Logout
+                </a>
+            </div>
+        </div>
+
+        <!-- Profile Form -->
+        <div class="col-lg-9 col-md-8">
+            <div class="bg-light p-30 mb-4">
+                <h4 class="mb-4">Account Details</h4>
+
+                <form action="/update-profile" method="post">
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label>Full Name</label>
+                            <input class="form-control" type="text" name="fullName" value="<%= user.name %>">
+                        </div>
+
+                        <div class="col-md-6 form-group">
+                            <label>Email</label>
+                            <input class="form-control" type="email" name="email" value="<%= user.email %>" readonly>
+                        </div>
+
+                        <div class="col-md-6 form-group">
+                            <label>Mobile Number</label>
+                            <input class="form-control" type="text" name="contact" value="<%= user.contact %>">
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>City :</label>
+                            <input class="form-control" type="text" name="city" value="<%= user.city %>">
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label>State</label>
+                            <input class="form-control" type="text" name="state" value="<%= user.state %>">
+                        </div>
+
+                        <div class="col-md-6 form-group">
+                            <label>Address</label>
+                            <textarea class="form-control" rows="3" name="address"><%= user.address %></textarea>
+                        </div>
+
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-primary px-5">
+                                Update Profile
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<%- include('layouts/footer') %>
