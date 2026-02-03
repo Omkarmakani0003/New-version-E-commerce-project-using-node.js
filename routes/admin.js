@@ -12,6 +12,7 @@ const { SliderValidation } = require('../middleware/validators/SliderValidation'
 const CategoryController = require("../controllers/adminControllers/CategoriesController")
 const SliderController = require('../controllers/adminControllers/SettingsController')
 const OrderController = require('../controllers/adminControllers/OrderController')
+const PaymentController = require("../controllers/adminControllers/PaymentController")
 const {CheckAdminAuth} = require('../middleware/authentication')
 
 
@@ -70,6 +71,8 @@ router.get('/view-order/:id',OrderController.vieworder)
 router.post('/update-status',OrderController.updateStatus)
 
 router.get('/users',UserController.users)
+
+router.get('/payment',PaymentController.payment)
 
 router.get('/logout',logout)
 

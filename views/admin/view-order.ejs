@@ -46,7 +46,7 @@
 
                         <div class="col-sm-4">
                             <strong>Order Date:</strong>
-                            <p class="text-muted mb-0"><%= order.createdAt %></p>
+                            <p class="text-muted mb-0"><%= new Date(order.updatedAt).toLocaleDateString() %></p>
                         </div>
 
                         <div class="col-sm-4">

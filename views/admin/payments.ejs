@@ -1,0 +1,63 @@
+<%- include('layouts/header')%>
+
+<div class="pcoded-main-container">
+  <div class="pcoded-content">
+    <!-- [ breadcrumb ] start -->
+    <div class="page-header">
+      <div class="page-block">
+        <div class="row align-items-center">
+          <div class="col-md-12">
+            <div class="page-header-title">
+              <h5 class="m-b-10">Payments</h5>
+            </div>
+            <ul class="breadcrumb">
+              <li class="breadcrumb-item">
+                <a href="/admin/"><i class="feather icon-home"></i></a>
+              </li>
+              <li class="breadcrumb-item"><a href="#!">Payments</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-12">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between">
+          <h5>Payments</h5>
+        </div>
+        <div class="card-body table-border-style">
+          <div class="table-responsive">
+            <table class="table table-striped" id="table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Payment id</th>
+                  <th>Date</th>
+                  <th>payment</th>
+                  <th>payment status</th>
+                </tr>
+              </thead>
+              <tbody>
+               <% if(payment  || payment.length > 0) {
+                 payment.forEach((payments,index)=>{
+                %>  
+                <tr>
+                    <td><%= index + 1 %></td>
+                    <td><%= payments.razorpay_payment_id || '-' %> </td>
+                    <td><%= new Date(payments.updatedAt).toLocaleDateString() %></td>
+                    <td>Rs. <%= payments.total %></td>
+                    <td><span class="p-2 badge <%= 
+                              (payments.payment_status == 'paid' || payments.payment_status == 'delivered') ? 'badge-success' : 
+                              (payments.payment_status == 'cancelled' || payments.payment_status == 'failed') ? 'badge-danger' : 'badge-info' %>"><%= payments.payment_status %></span></td>
+                </tr>
+               <% }) } %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('layouts/footer')%>

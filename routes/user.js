@@ -14,9 +14,14 @@ const {CheckUserAuth} = require('../middleware/authentication')
 const {UserAttech} = require('../middleware/UserAttech') 
 
 
-
-router.get('/login',LoginController.LoginForm)
-router.post('/user-login',LoginController.login)
+const Isloggein = (req,res,next) =>{
+    if(req.cookies.user_token){
+        return res.redirect('/')
+    }
+    next()
+}
+router.get('/login',Isloggein,LoginController.LoginForm)
+router.post('/user-login',Isloggein,LoginController.login)
 
 router.use(UserAttech)
 router.get('/user-register',RegisterController.RegisterForm)

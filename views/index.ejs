@@ -168,7 +168,7 @@
             products.forEach((product, index) => {
                 if (index < 8) {
         %>
-        <div class="col-6 col-md-4 col-lg-3 pb-3">
+        <div class="col-6 col-md-4 col-lg-3 pb-2">
             <a href="product-detail/<%= product.slug %>" class="text-decoration-none">
                 <div class="product-item bg-light h-100">
 
@@ -233,7 +233,7 @@
     <!-- Products Start -->
     <div class="container-fluid pt-5 pb-3">
     <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4">
-        <span class="bg-secondary pr-3">Featured Products</span>
+        <span class="bg-secondary pr-3">Recent Products</span>
     </h2>
 
     <div class="row px-xl-5">
@@ -243,7 +243,7 @@
                 return `${Title[0]} ${Title[1] || ''}...`
             }
 
-            products.forEach((product, index) => {
+            recentProducts.forEach((product, index) => {
                 if (index < 8) {
         %>
         <div class="col-6 col-md-4 col-lg-3 pb-3">

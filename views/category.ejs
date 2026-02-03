@@ -111,9 +111,9 @@
                 return `${Title[0]+' '+Title[1]}...`
               }
               products.docs.forEach((product)=>{ %>
-          <div class="col-lg-4 col-md-6 col-6 pb-3">
+          <div class="col-lg-4 col-md-6 col-6 pb-2">
             <a href="/product-detail/<%= product.slug %>">
-              <div class="product-item bg-light mb-4">
+              <div class="product-item bg-light mb-2">
                 <div class="product-img position-relative overflow-hidden">
                   <% if(product.images[0].url[0]) { %>
                     <img src="<%= product.images[0].url[0] %>" class="w-100" style="height:250px; object-fit:scale-down;" alt="">
