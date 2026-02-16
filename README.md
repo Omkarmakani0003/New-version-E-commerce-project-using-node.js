@@ -24,7 +24,14 @@ This project demonstrates secure authentication, advanced product filtering, car
 
 ### ☁️ Third-Party Integrations  
 <p align="left">
-  <img src="https://skillicons.dev/icons?i=cloudinary,npm" />
+  <!-- Cloudinary Official Logo -->
+  <img src="https://www.vectorlogo.zone/logos/cloudinary/cloudinary-icon.svg" height="50" alt="Cloudinary"/>
+
+  <!-- Brevo Logo -->
+  <img src="https://www.vectorlogo.zone/logos/brevo/brevo-icon.svg" height="50" alt="Brevo"/>
+
+  <!-- NPM -->
+  <img src="https://skillicons.dev/icons?i=npm" height="50" />
 </p>
 
 - 📧 Brevo Mail Service  
