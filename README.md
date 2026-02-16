@@ -25,11 +25,12 @@ This project demonstrates secure authentication, advanced product filtering, car
 ### ☁️ Third-Party Integrations  
 <p align="left">
   <!-- Cloudinary Official Logo -->
-  <img src="https://www.vectorlogo.zone/logos/cloudinary/cloudinary-icon.svg" height="50" alt="Cloudinary"/>
+  <img src="https://cdn.simpleicons.org/cloudinary/3448C5" height="50" alt="Cloudinary"/>
 
   <!-- Brevo Logo -->
-  <img src="https://www.vectorlogo.zone/logos/brevo/brevo-icon.svg" height="50" alt="Brevo"/>
-
+  <img src="https://cdn.simpleicons.org/brevo/00AEEF" height="50" alt="Brevo"/>
+  
+  <!-- Razorpay -->
   <img src="https://cdn.simpleicons.org/razorpay/0C2451" height="50" alt="Razorpay"/>
   
   <!-- NPM -->
