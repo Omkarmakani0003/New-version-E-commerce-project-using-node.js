@@ -16,7 +16,7 @@ This project demonstrates secure authentication, advanced product filtering, car
 
 ### 🎨 Frontend  
 <p align="left">
-  <img src="https://skillicons.dev/icons?i=html,css,bootstrap" />
+  <img src="https://skillicons.dev/icons?i=html,css,javascript,bootstrap" />
 </p>
 
 ### 🗄 Template Engine  
