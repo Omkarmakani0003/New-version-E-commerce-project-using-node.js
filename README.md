@@ -98,16 +98,17 @@ Password: 123
 ## ⚙️ Environment Variables  
 
 Create a `.env` file and configure:
-
-PORT = 
-DBURI = 
-JWTSECRET = 
-CLOUDINARY_NAME = 
-CLOUDINARY_API = 
-CLOUDINARY_SECRET_KEY =
-RAZORPAY_KEY_ID = 
-RAZORPAY_KEY_SECRET = 
-BREVO_API_KEY = 
+<pre>
+  PORT = 
+  DBURI = 
+  JWTSECRET = 
+  CLOUDINARY_NAME = 
+  CLOUDINARY_API = 
+  CLOUDINARY_SECRET_KEY =
+  RAZORPAY_KEY_ID = 
+  RAZORPAY_KEY_SECRET = 
+  BREVO_API_KEY =
+</pre>
 
 ## ⚙️ Install Dependencies
 
