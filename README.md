@@ -93,10 +93,6 @@ This project follows **MVC Architecture** for clean and scalable code structure:
 Email: testuser@gmail.com  
 Password: 123456  
 
-### 👨‍💼 Admin Login  
-Email: admin@gmail.com  
-Password: 123456  
-
 *(Update credentials if needed based on your database)*
 
 ---
