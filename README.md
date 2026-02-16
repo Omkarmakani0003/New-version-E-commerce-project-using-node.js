@@ -99,3 +99,21 @@ Password: 123
 
 Create a `.env` file and configure:
 
+PORT = 
+DBURI = 
+JWTSECRET = 
+CLOUDINARY_NAME = 
+CLOUDINARY_API = 
+CLOUDINARY_SECRET_KEY =
+RAZORPAY_KEY_ID = 
+RAZORPAY_KEY_SECRET = 
+BREVO_API_KEY = 
+
+## ⚙️ Install Dependencies
+
+npm install
+
+## ⚙️ Run the Application
+
+npm run dev
+
