@@ -30,6 +30,8 @@ This project demonstrates secure authentication, advanced product filtering, car
   <!-- Brevo Logo -->
   <img src="https://www.vectorlogo.zone/logos/brevo/brevo-icon.svg" height="50" alt="Brevo"/>
 
+  <img src="https://cdn.simpleicons.org/razorpay/0C2451" height="50" alt="Razorpay"/>
+  
   <!-- NPM -->
   <img src="https://skillicons.dev/icons?i=npm" height="50" />
 </p>
