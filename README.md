@@ -127,7 +127,7 @@ Create a `.env` file and configure:
 
 ## ⚙️ Install Dependencies
 
-npm install
+npm install --force
 
 ## ⚙️ Run the Application
 
