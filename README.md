@@ -76,6 +76,11 @@ This project demonstrates secure authentication, advanced product filtering, car
 ### 📧 Email System
 - Order confirmation emails via Brevo  
 
+### 💳 Payment Integration
+- Secure online payments using Razorpay
+- Order verification after successful payment
+- Payment failure handling
+
 ---
 
 ## 🏗 Architecture  
