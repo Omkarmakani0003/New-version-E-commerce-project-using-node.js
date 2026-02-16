@@ -90,8 +90,8 @@ This project follows **MVC Architecture** for clean and scalable code structure:
 ## 🧪 Test Credentials  
 
 ### 👤 User Login  
-Email: testuser@gmail.com  
-Password: 123456  
+Email: test@gmail.com  
+Password: 123 
 
 *(Update credentials if needed based on your database)*
 
