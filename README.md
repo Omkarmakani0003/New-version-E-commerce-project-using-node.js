@@ -93,8 +93,6 @@ This project follows **MVC Architecture** for clean and scalable code structure:
 Email: test@gmail.com  
 Password: 123 
 
-*(Update credentials if needed based on your database)*
-
 ---
 
 ## ⚙️ Environment Variables  
